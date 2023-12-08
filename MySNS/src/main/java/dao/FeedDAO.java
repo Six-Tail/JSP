@@ -40,7 +40,7 @@ public class FeedDAO {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT id, content, ts, images FROM feed WHERE id = ?";
+            String sql = "SELECT id, content, ts, images FROM feed WHERE ts = ?";
             
             conn = ConnectionPool.get();
             stmt = conn.prepareStatement(sql);

@@ -263,7 +263,7 @@ a:hover {
 			// 전화번호 숫자만 입력 여부 확인
 			var phoneError = document.getElementById("phoneError");
 			if (!isValidPhone(phone)) {
-				phoneError.innerHTML = "전화번호는 '-' 없이 숫자만 입력하세요.";
+				phoneError.innerHTML = "전화번호는 '-' 없이 숫자(11자)만 입력하세요.";
 				return false;
 			} else {
 				phoneError.innerHTML = "";
@@ -294,9 +294,9 @@ a:hover {
 		}
 
 		function isValidPhone(phone) {
-			// 숫자만 입력인지 확인
-			var phoneRegex = /^\d+$/;
-			return phoneRegex.test(phone);
+		    // 숫자만 입력이고 11자인지 확인
+		    var phoneRegex = /^\d{11}$/;
+		    return phoneRegex.test(phone);
 		}
 	</script>
 

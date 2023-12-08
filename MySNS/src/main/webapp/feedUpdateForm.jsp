@@ -5,10 +5,8 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-// 기존 코드가 있는지 확인하고 없다면 추가
 String uid = (String) session.getAttribute("id");
 if (uid == null) {
-	// 세션에 ID가 없으면 로그인 페이지로 리다이렉트
 	response.sendRedirect("loginForm.jsp");
 	return;
 }
@@ -18,12 +16,15 @@ ArrayList<FeedObj> feeds = feedDAO.getList();
 
 // 게시글 목록에서 선택한 게시글의 ID
 String selectedFeedId = request.getParameter("feedId");
+String selectedFeedTs = request.getParameter("ts");
+
 System.out.println("Debug: selectedFeed ID from Session: " + selectedFeedId); // 디버깅 출력
+System.out.println("Debug: selectedFeed Ts from Session: " + selectedFeedTs); // 디버깅 출력
 
 // 선택한 게시글 정보 가져오기
 FeedObj selectedFeed = null;
 for (FeedObj feed : feeds) {
-	if (feed.getId().equals(selectedFeedId)) {
+	if (feed.getId().equals(selectedFeedId) && feed.getTs().equals(selectedFeedTs)) {
 		selectedFeed = feed;
 		break;
 	}
@@ -228,45 +229,44 @@ a:hover {
 	resize: none; /* Disable textarea resizing by the user */
 	align-items: center;
 }
-/* 이미지 input 박스 스타일 수정 */
+/* Added styles for the file input box */
 .input-field input[type="file"] {
 	position: relative;
-	height: 100%; /* Adjust the height as needed */
+	height: 100%;
 	width: 100%;
 	border: 1px solid silver;
 	padding-left: 15px;
 	outline: none;
 	font-size: 16px;
-	padding: 12px; /* 수정: 상하 여백을 통해 텍스트의 높이 중앙을 조절합니다. */
+	padding: 12px;
 	transition: .4s;
 	align-items: center;
 }
+
 </style>
 </head>
 <body>
-	<form
-		action="feedUpdate.jsp?feedId=<%=selectedFeed.getId()%>&ts=<%=selectedFeed.getTs()%>"
-		method="post" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="<%=selectedFeed.getId()%>">
-		<header>글 수정</header>
-		<div class="input-field">
-			<input type="hidden" name="id" value="<%=selectedFeed.getId()%>">
-			<input type="text" name="id" class="idInput"
-				value="<%=selectedFeed.getId()%>" required readonly> <label
-				for="id">아이디</label>
-		</div>
-		<div class="input-field">
-			<textarea name="content" required><%=selectedFeed.getContent()%></textarea>
-			<label for="content">수정글</label>
-		</div>
-		<div class="input-field">
-			<input type="file" name="image"
-				value="<%=selectedFeed.getImages()%>"> <label for="image">이미지</label>
-		</div>
-		<div class="button">
-			<div class="inner"></div>
-			<button type="submit">수정하기</button>
-		</div>
-	</form>
+    <form action="feedUpdate.jsp?feedId=<%=selectedFeed.getId()%>&ts=<%=selectedFeed.getTs()%>" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<%=selectedFeed.getId()%>">
+        <header>글 수정</header>
+        <div class="input-field">
+            <input type="hidden" name="id" value="<%=selectedFeed.getId()%>">
+            <input type="text" name="id" class="idInput" value="<%=selectedFeed.getId()%>" required readonly>
+            <label for="id">아이디</label>
+        </div>
+        <div class="input-field">
+            <textarea name="content" required><%=selectedFeed.getContent()%></textarea>
+            <label for="content">수정글</label>
+        </div>
+        <div class="input-field">
+            <!-- Modified the file input -->
+            <input type="file" name="image" <%=selectedFeed.getImages()%>>
+            <label for="image">이미지</label>
+        </div>
+        <div class="button">
+            <div class="inner"></div>
+            <button type="submit">수정하기</button>
+        </div>
+    </form>
 </body>
 </html>

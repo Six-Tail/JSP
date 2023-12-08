@@ -143,6 +143,7 @@ input:focus ~label, input:valid ~label {
 	cursor: pointer;
 	font-family: 'Montserrat', sans-serif;
 	border-radius: 5px; /* 입력 필드의 border-radius와 일치하게 조절 */
+	transition: background 0.3s ease;
 	background: linear-gradient(to right, #00dbde, #fc00ff);
 }
 
@@ -271,7 +272,7 @@ a:hover {
 			// 전화번호 숫자만 입력 여부 확인
 			var phoneError = document.getElementById("phoneError");
 			if (!isValidPhone(phone)) {
-				phoneError.innerHTML = "전화번호는 '-'없이 숫자만 입력하세요.";
+				phoneError.innerHTML = "전화번호는 '-'없이 숫자(11자)만 입력하세요.";
 				return false;
 			} else {
 				phoneError.innerHTML = "";
@@ -296,9 +297,9 @@ a:hover {
 		}
 
 		function isValidPhone(phone) {
-			// 숫자만 입력인지 확인
-			var phoneRegex = /^\d+$/;
-			return phoneRegex.test(phoneNumber);
+		    // 숫자만 입력이고 11자인지 확인
+		    var phoneRegex = /^\d{11}$/;
+		    return phoneRegex.test(phone);
 		}
 
 		function isValidPassword(password) {
