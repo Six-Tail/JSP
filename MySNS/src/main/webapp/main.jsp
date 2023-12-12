@@ -62,7 +62,7 @@ th, td {
 }
 
 th {
-	background-color: #4CAF50;
+	background-color: #000693;
 	color: white;
 	font-size: 30px;
 }
