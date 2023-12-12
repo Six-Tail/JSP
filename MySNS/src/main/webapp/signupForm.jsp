@@ -130,25 +130,28 @@ input:focus ~label, input:valid ~label {
 }
 
 .input-field .idCheckButton {
-	position: absolute;
+	padding: 10px 15px;
 	right: 10px;
 	top: 5px;
 	height: 80%;
-	width: 100px; /* 필요에 따라 너비 조절 */
-	border: none;
-	background: none;
+	width: 100px;
+	background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
 	outline: none;
 	color: white;
-	font-size: 14px;
+	border: none;
+	border-radius: 5px;
 	cursor: pointer;
 	font-family: 'Montserrat', sans-serif;
-	border-radius: 5px; /* 입력 필드의 border-radius와 일치하게 조절 */
 	transition: background 0.3s ease;
-	background: linear-gradient(to right, #00dbde, #fc00ff);
+	background-size: 250%;
+	background-position: bottom;
+	position: absolute;
+	overflow: hidden;
+	font-size: medium;
 }
 
 .input-field .idCheckButton:hover {
-	background: linear-gradient(to right, #fc00ff, #00dbde);
+	background-position: left 0;
 }
 
 .container .auth {
@@ -230,6 +233,13 @@ a:hover {
 				alert("ID를 입력하세요");
 				return;
 			}
+
+			// ID 유효성 검사
+			if (!isValidId(id)) {
+				alert("아이디는 4~20자의 영어나 숫자만 입력하세요.");
+				return;
+			}
+
 			url = "confirmId.jsp?id=" + id;
 			window.open(url, "confirm", "width=300, height=200");
 		}
@@ -278,15 +288,15 @@ a:hover {
 				phoneError.innerHTML = "";
 			}
 
-			 // Email 유효성 검사
-	        var emailError = document.getElementById("emailError");
-	        if (!isValidEmail(email)) {
-	            emailError.innerHTML = "올바른 이메일 형식이 아닙니다.";
-	            return false;
-	        } else {
-	            emailError.innerHTML = "";
-	        }
-	        
+			// Email 유효성 검사
+			var emailError = document.getElementById("emailError");
+			if (!isValidEmail(email)) {
+				emailError.innerHTML = "올바른 이메일 형식이 아닙니다.";
+				return false;
+			} else {
+				emailError.innerHTML = "";
+			}
+
 			return true;
 		}
 
@@ -297,9 +307,9 @@ a:hover {
 		}
 
 		function isValidPhone(phone) {
-		    // 숫자만 입력이고 11자인지 확인
-		    var phoneRegex = /^\d{11}$/;
-		    return phoneRegex.test(phone);
+			// 숫자만 입력이고 11자인지 확인
+			var phoneRegex = /^\d{11}$/;
+			return phoneRegex.test(phone);
 		}
 
 		function isValidPassword(password) {
@@ -307,12 +317,12 @@ a:hover {
 			var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 			return passwordRegex.test(password);
 		}
-		
+
 		function isValidEmail(email) {
-	        // 이메일 유효성 검사
-	        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	        return emailRegex.test(email);
-	    }
+			// 이메일 유효성 검사
+			var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			return emailRegex.test(email);
+		}
 	</script>
 </body>
 </html>
